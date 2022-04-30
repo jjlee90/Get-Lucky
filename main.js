@@ -98,6 +98,25 @@ let player = document.getElementById("player")
 let dealerArr = [];
 let dealerTotal = 0;
 
+let cashMoney = 1000;
+let bankRoll = document.getElementById("wallet")
+bankRoll.innerHTML = cashMoney
+
+let wagerArea = document.getElementById("wager-area")
+let yourBet = 0;
+wagerArea.innerHTML;
+
+
+let hundredBtn = document.getElementById("100")
+let fiveHundredBtn = document.getElementById("500")
+let OneThousandBtn = document.getElementById("1000")
+
+hundredBtn.addEventListener('click', function() {
+    wagerArea.innerHTML = yourBet += 100
+    bankRoll.innerHTML -= 100
+
+})
+
 
 
 //grabbing player cards container and displaying text to your hand 
@@ -124,6 +143,7 @@ hitButton.addEventListener('click', function() {
     // when button is clicked playerHand in be invoked
     if (playerTotal < 21) {
         playerHand()
+        console.log(playerArr)
         if (playerTotal > 21) {
             setTimeout(function() {
                 alert('bust!')
@@ -159,16 +179,16 @@ function hideDealerHand(card) {
     // card = random card 
     card = getRandomCard()
     if (card.shown === false) {
-        dealerTotal = 0
+        // total value of the cards in the dealers hand 
+        dealerTotal = dealerTotal
     } else {
         dealerTotal += card[2]
     }
-    // total value of the cards in the dealers hand 
-    dealerTotal += card[2]
-        // pushing random card into dealer array 
+
+    // pushing random card into dealer array 
     dealerArr.push(card)
     console.log("dealer card")
-
+    console.log(dealerArr)
 
     // dealer card text will display dealerTotal 
     dealerCards.innerHTML = dealerTotal
@@ -176,29 +196,55 @@ function hideDealerHand(card) {
 
 
 
-let betBtn = document.getElementById("wager")
+let betBtn = document.getElementById("bet")
 
 betBtn.addEventListener("click", function() {
-
+    startGame()
 })
 
 function startGame() {
     playerHand()
     dealerHand()
     playerHand()
-    hideDealerHand()
+    setTimeout(function() {
+        hideDealerHand()
+    }, 200)
+
 }
 
-startGame()
 
+
+function dealerDraw() {
+
+    dealerTotal = dealerArr[0][2] + dealerArr[1][2]
+    dealerCards.innerHTML = dealerTotal
+
+}
 let standButton = document.getElementById('stand')
 standButton.addEventListener('click', function() {
-    if (dealerTotal < 21) {
+    dealerDraw()
+    while (dealerTotal < 17) {
         dealerHand()
+        result()
     }
+    setTimeout(function() {
+        result()
+    }, 250)
 
 })
 
-// for (let i = 0; dealerTotal < 21; i++) {
-//     dealerHand()
-// }
+let resultId = document.getElementById('result')
+resultId.innerHTML = null
+
+let result = () => {
+    if (dealerTotal > 21) {
+        resultId.innerHTML = "Player wins!"
+
+    } else if (playerTotal === dealerTotal) {
+        resultId.innerHTML = "Push!"
+    } else if (playerTotal > dealerTotal) {
+        resultId.innerHTML = "Player wins!"
+    } else {
+        resultId.innerHTML = "Dealer stops at " + dealerTotal
+    }
+}

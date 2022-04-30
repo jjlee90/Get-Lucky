@@ -67,11 +67,13 @@
             </div>
             <!-- Result, outcome of the hand played -->
             <div class="container d-flex justify-content-center">
-                <h2>Result</h2>
+                <h2 id="result">Result</h2>
             </div>
             <!-- player cards -->
             <div class="container d-flex justify-content-center">
+                <h3 id="wager-area">Place Your Bet</h3>
                 <h2 id="player-cards" attribute="">player cards</h2>
+
             </div>
             <!-- player section -->
             <div class="container d-flex justify-content-center">
@@ -83,12 +85,16 @@
 
                 </div>
                 <!-- Your bankroll -->
-                <form action="" class="container col row-sm-5 row-md-5 row-lg-5">
+                <div class="container col row-sm-5 row-md-5 row-lg-5">
                     <h2>Bankroll</h2>
-                    <input id="bet" type="number" placeholder="Place your bet">
+                    <div id="wallet"></div>
+                    <!-- <input id="wallet" type="number" placeholder="Place your bet"> -->
                     <!-- wager button, start game -->
-                    <button id="wager">Bet</button>
-                </form>
+                    <button id="100">100</button>
+                    <button id="500">500</button>
+                    <button id="1000">1000</button>
+                    <button id="bet">Bet</button>
+                </div>
 
             </div>
 
