@@ -1,0 +1,26 @@
+* {
+    border: 1px solid black;
+    color: white
+}
+
+body {
+    background-color: rgb(10, 114, 10);
+}
+
+#player {
+    align-content: center
+}
+
+button {
+    color: black;
+}
+
+#hit,
+#stand,
+#wager {
+    background-color: grey;
+}
+
+#bet {
+    color: white;
+}
