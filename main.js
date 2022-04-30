@@ -84,6 +84,9 @@ function getRandomCard(card) {
     let cardValue = randomNum - 1;
     //card will be chosen and returned 
     card = fullDeck[cardValue]
+    card.shown = false
+        // call card.shown = false 
+
     console.log(card)
     return card
 }
@@ -119,9 +122,21 @@ let hitButton = document.getElementById('hit')
 // adding event listener to get random number when button is clicked 
 hitButton.addEventListener('click', function() {
     // when button is clicked playerHand in be invoked
-    playerHand()
-    console.log(playerArr)
+    if (playerTotal < 21) {
+        playerHand()
+        if (playerTotal > 21) {
+            setTimeout(function() {
+                alert('bust!')
+            }, 100)
+
+        }
+    } else {
+        alert("You have 21! You should stand!")
+    }
+
+    // console.log(playerArr)
 })
+
 
 // getting dealerCards section and setting value 
 let dealerCards = document.getElementById("dealerCards")
@@ -130,7 +145,8 @@ dealerCards.innerHTML = "Dealer's Hand"
 function dealerHand(card) {
     // card = random card 
     card = getRandomCard()
-        // total value of the cards in the dealers hand 
+
+    // total value of the cards in the dealers hand 
     dealerTotal += card[2]
         // pushing random card into dealer array 
     dealerArr.push(card)
@@ -142,16 +158,19 @@ function dealerHand(card) {
 function hideDealerHand(card) {
     // card = random card 
     card = getRandomCard()
-        // total value of the cards in the dealers hand 
+    if (card.shown === false) {
+        dealerTotal = 0
+    } else {
+        dealerTotal += card[2]
+    }
+    // total value of the cards in the dealers hand 
     dealerTotal += card[2]
         // pushing random card into dealer array 
     dealerArr.push(card)
     console.log("dealer card")
 
-    $("#dealerCards").ready(function() {
-            $("#dealerCards").hide()
-        })
-        // dealer card text will display dealerTotal 
+
+    // dealer card text will display dealerTotal 
     dealerCards.innerHTML = dealerTotal
 }
 
@@ -171,3 +190,15 @@ function startGame() {
 }
 
 startGame()
+
+let standButton = document.getElementById('stand')
+standButton.addEventListener('click', function() {
+    if (dealerTotal < 21) {
+        dealerHand()
+    }
+
+})
+
+// for (let i = 0; dealerTotal < 21; i++) {
+//     dealerHand()
+// }

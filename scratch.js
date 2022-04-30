@@ -36,3 +36,8 @@ class cardDeck {
 // console.log(fullDeck.length)
 
 export { cardDeck }
+
+
+// $("#dealerCards").ready(function() {
+//     $("#dealerCards").hide()
+// })
