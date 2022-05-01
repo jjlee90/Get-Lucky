@@ -39,30 +39,38 @@ let player = document.getElementById("player")
 let dealerArr = [];
 let dealerTotal = 0;
 
-let cashMoney = 1000;
+// let cashMoney = 1000;
 let bankRoll = document.getElementById("wallet")
-bankRoll.innerHTML = cashMoney
+bankRoll.innerHTML = 1000
+
 
 let wagerArea = document.getElementById("wager-area")
 let yourBet = 0;
+let yourBetArr = []
 wagerArea.innerHTML;
 
-
+let twentyFive = document.getElementById("25")
 let hundredBtn = document.getElementById("100")
 let fiveHundredBtn = document.getElementById("500")
-let oneThousandBtn = document.getElementById("1000")
+
 
 hundredBtn.addEventListener('click', function() {
-    wagerArea.innerHTML = yourBet += 100
-    bankRoll.innerHTML -= 100
+    if (bankRoll.innerHTML - 100 >= 0) {
+        bankRoll.innerHTML -= 100
+        yourBetArr.push(wagerArea.innerHTML = yourBet += 100)
+        console.log(yourBetArr)
+            // console.log(cashMoney)
+    } else {
+        alert('You dont have enough cash money')
+    }
 })
 
-let bet500 = (cashMoney) => {
+let bet500 = () => {
 
     if (bankRoll.innerHTML - 500 >= 0) {
         wagerArea.innerHTML = yourBet += 500
         bankRoll.innerHTML -= 500
-        console.log(cashMoney)
+            // console.log(cashMoney)
     } else {
         alert('You dont have enough cash money')
     }
@@ -72,9 +80,14 @@ fiveHundredBtn.addEventListener('click', function() {
 
 })
 
-oneThousandBtn.addEventListener('click', function() {
-    wagerArea.innerHTML = yourBet += 1000
-    bankRoll.innerHTML -= 1000
+twentyFive.addEventListener('click', function() {
+    if (bankRoll.innerHTML - 25 >= 0) {
+        wagerArea.innerHTML = yourBet += 25
+        bankRoll.innerHTML -= 25
+            // console.log(cashMoney)
+    } else {
+        alert('You dont have enough cash money')
+    }
 })
 
 
@@ -106,6 +119,8 @@ hitButton.addEventListener('click', function() {
         if (playerTotal > 21) {
             setTimeout(function() {
                 resultId.innerHTML = "You Bust! Dealer Wins"
+
+                console.log(yourBetArr)
                 reset()
             }, 100)
 
@@ -201,22 +216,27 @@ resultId.innerHTML = null
 let result = () => {
     if (dealerTotal > 21) {
         resultId.innerHTML = "Player wins!"
+        console.log(bankRoll.innerHTML = bankRoll.innerHTML + yourBet)
 
     } else if (playerTotal === dealerTotal) {
         resultId.innerHTML = "Push!"
     } else if (playerTotal > dealerTotal) {
         resultId.innerHTML = "Player wins!"
+        console.log(bankRoll.innerHTML = bankRoll.innerHTML + yourBet)
     } else {
         resultId.innerHTML = "Dealer Wins"
     }
     setTimeout(function() {
         reset()
-    }, 5000)
+    }, 1500)
 
 }
 
 // reset player and dealer hands to 0 
 let reset = () => {
+    wagerArea.innerHTML = "Place your Bet"
+    yourBetArr.length = 0
+    yourBet = 0
     playerTotal = 0
     dealerTotal = 0
     playerArr.length = 0
