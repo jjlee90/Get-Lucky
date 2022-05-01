@@ -1,58 +1,3 @@
-// object containing a deck of cards
-// cardDeck = [
-//     "Ace of Spades",
-//     "King of Spades",
-//     "Queen of Spades",
-//     "Jack of Spades",
-//     "10 of Spades",
-//     "9 of Spades",
-//     "8 of Spades",
-//     "7 of Spades",
-//     "6 of Spades",
-//     "5 of Spades",
-//     "4 of Spades",
-//     "3 of Spades",
-//     "2 of Spades",
-//     "Ace of Clubs",
-//     "King of Clubs",
-//     "Queen of Clubs",
-//     "Jack of Clubs",
-//     "10 of Clubs",
-//     "9 of Clubs",
-//     "8 of Clubs",
-//     "7 of Clubs",
-//     "6 of Clubs",
-//     "5 of Clubs",
-//     "4 of Clubs",
-//     "3 of Clubs",
-//     "2 of Clubs",
-//     "Ace of Hearts",
-//     "King of Hearts",
-//     "Queen of Hearts",
-//     "Jack of Hearts",
-//     "10 of Hearts",
-//     "9 of Hearts",
-//     "8 of Hearts",
-//     "7 of Hearts",
-//     "6 of Hearts",
-//     "5 of Hearts",
-//     "4 of Hearts",
-//     "3 of Hearts",
-//     "2 of Hearts",
-//     "Ace of Diamonds",
-//     "King of Diamonds",
-//     "Queen of Diamonds",
-//     "Jack of Diamonds",
-//     "10 of Diamonds",
-//     "9 of Diamonds",
-//     "8 of Diamonds",
-//     "7 of Diamonds",
-//     "6 of Diamonds",
-//     "5 of Diamonds",
-//     "4 of Diamonds",
-//     "3 of Diamonds",
-//     "2 of Diamonds",
-// ]
 import { cardDeck } from '/scratch.js'
 
 // creating blueprint to make a full deck of cards 
@@ -70,9 +15,6 @@ let fullDeck = [...spades, ...clubs, ...diamond, ...hearts]
 // [0] = first card e.g. Ace [2] = card value 
 console.log(fullDeck[1][2])
 
-// console.log(typeof(cardDeck))
-// console.log(cardDeck.length)
-
 let body = document.body
     // appending a card to the body 
 
@@ -85,7 +27,6 @@ function getRandomCard(card) {
     //card will be chosen and returned 
     card = fullDeck[cardValue]
     card.shown = false
-        // call card.shown = false 
 
     console.log(card)
     return card
@@ -109,14 +50,32 @@ wagerArea.innerHTML;
 
 let hundredBtn = document.getElementById("100")
 let fiveHundredBtn = document.getElementById("500")
-let OneThousandBtn = document.getElementById("1000")
+let oneThousandBtn = document.getElementById("1000")
 
 hundredBtn.addEventListener('click', function() {
     wagerArea.innerHTML = yourBet += 100
     bankRoll.innerHTML -= 100
+})
+
+let bet500 = (cashMoney) => {
+
+    if (bankRoll.innerHTML - 500 >= 0) {
+        wagerArea.innerHTML = yourBet += 500
+        bankRoll.innerHTML -= 500
+        console.log(cashMoney)
+    } else {
+        alert('You dont have enough cash money')
+    }
+}
+fiveHundredBtn.addEventListener('click', function() {
+    bet500()
 
 })
 
+oneThousandBtn.addEventListener('click', function() {
+    wagerArea.innerHTML = yourBet += 1000
+    bankRoll.innerHTML -= 1000
+})
 
 
 //grabbing player cards container and displaying text to your hand 
@@ -146,17 +105,15 @@ hitButton.addEventListener('click', function() {
         console.log(playerArr)
         if (playerTotal > 21) {
             setTimeout(function() {
-                alert('bust!')
+                resultId.innerHTML = "You Bust! Dealer Wins"
+                reset()
             }, 100)
 
         }
     } else {
         alert("You have 21! You should stand!")
     }
-
-    // console.log(playerArr)
 })
-
 
 // getting dealerCards section and setting value 
 let dealerCards = document.getElementById("dealerCards")
@@ -194,41 +151,45 @@ function hideDealerHand(card) {
     dealerCards.innerHTML = dealerTotal
 }
 
-
-
 let betBtn = document.getElementById("bet")
 
 betBtn.addEventListener("click", function() {
-    startGame()
+
+    setTimeout(function() {
+        startGame()
+    }, 300)
 })
 
+// starting game by giving two cards to player and dealer 
 function startGame() {
     playerHand()
     dealerHand()
     playerHand()
     setTimeout(function() {
         hideDealerHand()
-    }, 200)
+    }, 100)
 
 }
 
-
-
+// reveal the dealer hole card and add the total
 function dealerDraw() {
 
     dealerTotal = dealerArr[0][2] + dealerArr[1][2]
     dealerCards.innerHTML = dealerTotal
 
 }
+// when player stands the dealer will draw up to a total of 17 and winner will be determined
 let standButton = document.getElementById('stand')
 standButton.addEventListener('click', function() {
     dealerDraw()
     while (dealerTotal < 17) {
         dealerHand()
         result()
+
     }
     setTimeout(function() {
         result()
+
     }, 250)
 
 })
@@ -236,6 +197,7 @@ standButton.addEventListener('click', function() {
 let resultId = document.getElementById('result')
 resultId.innerHTML = null
 
+// logic to determine the winner of the hand
 let result = () => {
     if (dealerTotal > 21) {
         resultId.innerHTML = "Player wins!"
@@ -245,6 +207,21 @@ let result = () => {
     } else if (playerTotal > dealerTotal) {
         resultId.innerHTML = "Player wins!"
     } else {
-        resultId.innerHTML = "Dealer stops at " + dealerTotal
+        resultId.innerHTML = "Dealer Wins"
     }
+    setTimeout(function() {
+        reset()
+    }, 5000)
+
+}
+
+// reset player and dealer hands to 0 
+let reset = () => {
+    playerTotal = 0
+    dealerTotal = 0
+    playerArr.length = 0
+    dealerArr.length = 0
+    console.log(dealerArr)
+    dealerCards.innerHTML = "Dealer's Hand"
+    playerCards.innerHTML = "Your Hand"
 }
