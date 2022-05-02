@@ -1,13 +1,29 @@
 import { cardDeck } from '/scratch.js'
 
-// creating blueprint to make a full deck of cards 
+function cardImg(name, suit) {
+    let image = document.createElement('img')
+    image.src = `images/${name}-${suit}.png`
+
+    return image
+}
+let dealerImg = document.getElementById('dealer')
+dealerImg.append(cardImg("bj", "dealer"))
+
+let playerImg = document.getElementById("player")
+playerImg.append(cardImg("bj", "player"))
+
+
+let test = document.getElementById("test")
+let test2 = document.getElementById("test2")
+let cardImages = null;
+
 let cardBlueprint = new cardDeck
 
 // creating card of every suit
 let spades = cardBlueprint.makeDeck("spades")
-let clubs = cardBlueprint.makeDeck("Clubs")
-let diamond = cardBlueprint.makeDeck("Diamond")
-let hearts = cardBlueprint.makeDeck("Hearts")
+let clubs = cardBlueprint.makeDeck("clubs")
+let diamond = cardBlueprint.makeDeck("diamonds")
+let hearts = cardBlueprint.makeDeck("hearts")
 
 let fullDeck = [...spades, ...clubs, ...diamond, ...hearts]
     //let fullDeck2 = [...spades, ...clubs, ...diamond, ...hearts]
@@ -34,7 +50,7 @@ function getRandomCard(card) {
 // Empty array that will store player cards 
 let playerArr = []
 let playerTotal = 0;
-let player = document.getElementById("player")
+
 
 let dealerArr = [];
 let dealerTotal = 0;
@@ -53,6 +69,8 @@ let twentyFive = document.getElementById("25")
 let hundredBtn = document.getElementById("100")
 let fiveHundredBtn = document.getElementById("500")
 
+twentyFive.append(cardImg("25", "chip"))
+hundredBtn.append(cardImg("100", "chip"))
 
 hundredBtn.addEventListener('click', function() {
     if (bankRoll.innerHTML - 100 >= 0) {
@@ -95,15 +113,22 @@ let playerCards = document.getElementById("player-cards")
 playerCards.innerHTML = "Your Hand"
 
 function playerHand(card) {
+
     // card = random card 
     card = getRandomCard()
         // playertotal will add each card value to its total 
+    if (card[0] === "ace" && playerTotal <= 10) {
+        card[2] = 11
+    }
     playerTotal += card[2]
         // pushing random card into player array
     playerArr.push(card)
     console.log("player card")
+    cardImages = cardImg(card[0], card[1])
         // playerCards will display player total
     playerCards.innerHTML = playerTotal
+    test.append(cardImages)
+    console.log(test)
 }
 
 // grab button then append it 
@@ -132,14 +157,21 @@ let dealerCards = document.getElementById("dealerCards")
 dealerCards.innerHTML = "Dealer's Hand"
 
 function dealerHand(card) {
-    // card = random card 
     card = getRandomCard()
+
+    if (card[0] === "ace" && dealerTotal <= 10) {
+        card[2] = 11
+    }
+    // card = random card 
+
 
     // total value of the cards in the dealers hand 
     dealerTotal += card[2]
         // pushing random card into dealer array 
     dealerArr.push(card)
     console.log("dealer card")
+    cardImages = cardImg(card[0], card[1])
+    test2.append(cardImages)
         // dealer card text will display dealerTotal 
     dealerCards.innerHTML = dealerTotal
 }
@@ -184,10 +216,13 @@ function startGame() {
 }
 
 // reveal the dealer hole card and add the total
-function dealerDraw() {
+function dealerDraw(card) {
+    card = getRandomCard()
 
     dealerTotal = dealerArr[0][2] + dealerArr[1][2]
     dealerCards.innerHTML = dealerTotal
+    cardImages = cardImg(card[0], card[1])
+    test2.append(cardImages)
 
 }
 // when player stands the dealer will draw up to a total of 17 and winner will be determined
@@ -196,7 +231,6 @@ standButton.addEventListener('click', function() {
     dealerDraw()
     while (dealerTotal < 17) {
         dealerHand()
-
 
     }
     setTimeout(function() {
@@ -245,4 +279,7 @@ let reset = () => {
     dealerCards.innerHTML = "Dealer's Hand"
     playerCards.innerHTML = "Your Hand"
     resultId.innerHTML = null
+    cardImages = null
+    test.textContent = ""
+    test2.textContent = ""
 }

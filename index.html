@@ -59,10 +59,11 @@
         <div class="container table row d-flex justify-content-center">
             <!-- Dealer section -->
             <div id="dealer" class=" d-flex justify-content-center">
-                <h2>Dealer</h2>
+                <!-- <h2>Dealer</h2> -->
             </div>
             <!-- Dealer cards  -->
             <div class="container d-flex justify-content-center">
+                <div id="test2" class="container d-flex justify-content-center"></div>
                 <h2 id="dealerCards" attribute=""> Dealer Cards</h2>
             </div>
             <!-- Result, outcome of the hand played -->
@@ -72,29 +73,50 @@
             <!-- player cards -->
             <div class="container d-flex justify-content-center">
                 <h3 id="wager-area">Place Your Bet</h3>
+                <div id="test"></div>
                 <h2 id="player-cards" attribute="">player cards</h2>
 
             </div>
             <!-- player section -->
             <div class="container d-flex justify-content-center">
-                <div id="player" class="container row row-sm-5 row-md-5 row-lg-5">
-                    <h2>player</h2>
+                <div class="container col-sm-6 col-md-6">
+
+                    <div id="player" class="container row">
+                        <h2>Player</h2>
+
+                    </div>
+
+                    <div class="container row ">
+                        <button id="hit">Hit Me</button>
+                        <button id="stand">Stand</button>
+                    </div>
                     <!-- buttons to hit (take another card) or stand -->
-                    <button id="hit">Hit Me</button>
-                    <button id="stand">Stand</button>
+
 
                 </div>
-                <!-- Your bankroll -->
-                <div class="container col row-sm-5 row-md-5 row-lg-5">
-                    <h2>Bankroll</h2>
-                    <div id="wallet"></div>
-                    <!-- <input id="wallet" type="number" placeholder="Place your bet"> -->
-                    <!-- wager button, start game -->
-                    <button id="25">25</button>
-                    <button id="100">100</button>
-                    <button id="500">500</button>
-                    <button id="bet">Bet</button>
+                <div class="container col-sm-6 col-md-6">
+
+                    <div class="container row">
+                        <!-- Your bankroll -->
+                        <!-- <input id="wallet" type="number" placeholder="Place your bet"> -->
+                        <!-- wager button, start game -->
+                        <h2>Bankroll</h2>
+                        <h3 id="wallet"></h3>
+                    </div>
+
+                    <div class="container row">
+                        <!-- buttons to hit (take another card) or stand -->
+                        <button id="25"></button>
+                        <button id="100"></button>
+                        <button id="500">500</button>
+                        <button id="bet">Bet</button>
+                    </div>
+
+
+
                 </div>
+
+
 
             </div>
 
