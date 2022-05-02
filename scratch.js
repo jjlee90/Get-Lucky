@@ -7,19 +7,19 @@ class cardDeck {
         // method to make 13 cards
     makeDeck(suit) {
         return [
-            ["Ace", this.suit = suit, 1],
-            ["King", this.suit = suit, 10],
-            ["Queen", this.suit = suit, 10],
-            ["Jack", this.suit = suit, 10],
-            ["10", this.suit = suit, 10],
-            ["9", this.suit = suit, 9],
-            ["8", this.suit = suit, 8],
-            ["7", this.suit = suit, 7],
-            ["6", this.suit = suit, 6],
-            ["5", this.suit = suit, 5],
-            ["4", this.suit = suit, 4],
-            ["3", this.suit = suit, 3],
-            ["2", this.suit = suit, 2],
+            ["ace", this.suit = suit, 1],
+            ["king", this.suit = suit, 10],
+            ["queen", this.suit = suit, 10],
+            ["jack", this.suit = suit, 10],
+            ["ten", this.suit = suit, 10],
+            ["nine", this.suit = suit, 9],
+            ["eight", this.suit = suit, 8],
+            ["seven", this.suit = suit, 7],
+            ["six", this.suit = suit, 6],
+            ["five", this.suit = suit, 5],
+            ["four", this.suit = suit, 4],
+            ["three", this.suit = suit, 3],
+            ["two", this.suit = suit, 2],
         ]
     }
 }
