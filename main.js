@@ -90,7 +90,6 @@ twentyFive.addEventListener('click', function() {
     }
 })
 
-
 //grabbing player cards container and displaying text to your hand 
 let playerCards = document.getElementById("player-cards")
 playerCards.innerHTML = "Your Hand"
@@ -117,12 +116,10 @@ hitButton.addEventListener('click', function() {
         playerHand()
         console.log(playerArr)
         if (playerTotal > 21) {
+            resultId.innerHTML = "You Bust! Dealer Wins"
             setTimeout(function() {
-                resultId.innerHTML = "You Bust! Dealer Wins"
-
-                console.log(yourBetArr)
                 reset()
-            }, 100)
+            }, 2500)
 
         }
     } else {
@@ -199,7 +196,7 @@ standButton.addEventListener('click', function() {
     dealerDraw()
     while (dealerTotal < 17) {
         dealerHand()
-        result()
+
 
     }
     setTimeout(function() {
@@ -216,19 +213,22 @@ resultId.innerHTML = null
 let result = () => {
     if (dealerTotal > 21) {
         resultId.innerHTML = "Player wins!"
-        console.log(bankRoll.innerHTML = bankRoll.innerHTML + yourBet)
 
     } else if (playerTotal === dealerTotal) {
         resultId.innerHTML = "Push!"
+        bankRoll.innerHTML = parseInt(bankRoll.innerHTML) + parseInt(wagerArea.innerHTML)
     } else if (playerTotal > dealerTotal) {
         resultId.innerHTML = "Player wins!"
-        console.log(bankRoll.innerHTML = bankRoll.innerHTML + yourBet)
+
     } else {
         resultId.innerHTML = "Dealer Wins"
     }
+    if (resultId.innerHTML === "Player wins!") {
+        bankRoll.innerHTML = parseInt(bankRoll.innerHTML) + (parseInt(wagerArea.innerHTML)) * 2
+    }
     setTimeout(function() {
         reset()
-    }, 1500)
+    }, 2500)
 
 }
 
@@ -244,4 +244,5 @@ let reset = () => {
     console.log(dealerArr)
     dealerCards.innerHTML = "Dealer's Hand"
     playerCards.innerHTML = "Your Hand"
+    resultId.innerHTML = null
 }
