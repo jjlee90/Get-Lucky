@@ -9,9 +9,27 @@ body {
 }
 
 
-/* #player {
-    align-content: center
-} */
+/* dealer section */
+
+
+/* Images */
+
+#dealer>img {
+    width: 35%;
+}
+
+#player>img {
+    width: 50%;
+}
+
+button>img {
+    width: 18%;
+}
+
+#test>img,
+#test2>img {
+    width: 15%;
+}
 
 button {
     color: black;
@@ -23,8 +41,4 @@ button {
 #wager,
 #bet {
     background-color: grey;
-}
-
-img {
-    width: 30%;
 }

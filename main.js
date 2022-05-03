@@ -71,13 +71,14 @@ let fiveHundredBtn = document.getElementById("500")
 
 twentyFive.append(cardImg("25", "chip"))
 hundredBtn.append(cardImg("100", "chip"))
+fiveHundredBtn.append(cardImg("500", "chip"))
 
 hundredBtn.addEventListener('click', function() {
     if (bankRoll.innerHTML - 100 >= 0) {
         bankRoll.innerHTML -= 100
-        yourBetArr.push(wagerArea.innerHTML = yourBet += 100)
+        wagerArea.innerHTML = yourBet += 100
         console.log(yourBetArr)
-            // console.log(cashMoney)
+
     } else {
         alert('You dont have enough cash money')
     }
@@ -102,7 +103,7 @@ twentyFive.addEventListener('click', function() {
     if (bankRoll.innerHTML - 25 >= 0) {
         wagerArea.innerHTML = yourBet += 25
         bankRoll.innerHTML -= 25
-            // console.log(cashMoney)
+
     } else {
         alert('You dont have enough cash money')
     }
