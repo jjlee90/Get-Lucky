@@ -17,9 +17,9 @@ let playerImg = document.getElementById("player")
 playerImg.append(cardImg("bj", "player"))
 
 // function checking if player has blackjack
-function checkbj() {
-
-    if (playerTotal === 21 && playerArr.length === 2) {
+function checkbj(xTotal, xArr) {
+    // if total === 21 and arr.length === 2, x has blackjack. x will be either player or dealer
+    if (xTotal === 21 && xArr.length === 2) {
         console.log('blackjack!')
         result()
         setTimeout(function() {
@@ -126,21 +126,17 @@ function playerHand(card) {
     // card = random card 
     card = getRandomCard()
 
-    // if (soft === true && playerTotal > 21) {
-    //     playerCards.innerHTML = 0
-    //     playerCards.innerHTML = playerTotal - 10
-    //     soft = false
-
-    // }
     // if card index 0 === "ace" and playerTotal is less than 10 
     if (card[0] === "ace" && playerTotal <= 10) {
         // card index 2 will equal 11
         card[2] = 11
-        soft = true
-        console.log("soft is " + soft)
-            // playertotal will add card value to its total 
+            // soft = true
+            // console.log("soft is " + soft)
+
+        // playertotal will add card value to its total 
         playerTotal += card[2]
-            // playerCards section will display playerTotal 
+
+        // playerCards section will display playerTotal 
         playerCards.innerHTML = playerTotal
     } else if (card[0] === "ace" && playerTotal > 10) {
         // ace will equal 1 if player total is > 10
@@ -153,14 +149,8 @@ function playerHand(card) {
         playerTotal += card[2]
         playerCards.innerHTML = playerTotal
     }
-    // check for black jack 
-
     console.log(card)
-
-
-    // playerTotal += card[2]
-
-    // pushing random card into player array
+        // pushing random card into player array
     playerArr.push(card)
     console.log(playerArr)
     console.log(playerArr.length)
@@ -236,19 +226,28 @@ function dealerHand(card) {
 
     // if card index 0 === "ace" and playerTotal is less than 10 
     if (card[0] === "ace" && dealerTotal <= 10) {
-        // card index 2 will equal 11
+        console.log(dealerTotal)
+            // card index 2 will equal 11
         card[2] = 11
-            // dealertotal will add card value to its total 
-        dealerTotal += card[2]
 
-    } else if (card[0] === "ace" && dealerTotal > 10) {
+        // dealertotal will add card value to its total 
+        dealerTotal += card[2]
+        console.log(dealerTotal)
+            // dealer card text will display dealerTotal 
+        dealerCards.innerHTML = dealerTotal
+        console.log(dealerTotal)
+    } else if (card[0] === "ace" && dealerTotal >= 11) {
         // ace will equal 1 if player total is > 10
         card[2] = 1
         dealerTotal += card[2]
-
+        dealerCards.innerHTML = dealerTotal
+        console.log(dealerTotal)
     } else {
         // card value will equal card value 
+        card[2] = card[2]
         dealerTotal += card[2]
+        dealerCards.innerHTML = dealerTotal
+        console.log(dealerTotal)
     }
     // total value of the cards in the dealers hand 
 
@@ -264,8 +263,8 @@ function dealerHand(card) {
     cardImages = cardImg(card[0], card[1])
     dealerCardSection.append(cardImages)
 
-    // dealer card text will display dealerTotal 
-    dealerCards.innerHTML = dealerTotal
+    console.log(dealerCardSection)
+
 }
 
 function hideDealerHand(card) {
@@ -273,9 +272,34 @@ function hideDealerHand(card) {
 
     if (card.shown === false) {
         // dealer card will only display first card total. second card is hidden until player end phase.
-        dealerCards.innerHTML = dealerTotal
+        // if card index 0 === "ace" and playerTotal is less than 10 
+        if (card[0] === "ace" && dealerTotal <= 10) {
+
+            // card index 2 will equal 11
+            card[2] = 11
+
+            // dealertotal will add card value to its total 
+            dealerTotal += card[2]
+
+            // dealer card text will display dealerTotal 
+            // dealerCards.innerHTML = dealerTotal
+            console.log(dealerTotal)
+        } else if (card[0] === "ace" && dealerTotal >= 11) {
+            // ace will equal 1 if player total is > 10
+            card[2] = 1
+            dealerTotal += card[2]
+                // dealerCards.innerHTML = dealerTotal
+            console.log(dealerTotal)
+        } else {
+            // card value will equal card value 
+            card[2] = card[2]
+                // dealerTotal += card[2]
+                // dealerCards.innerHTML = dealerTotal
+            console.log(dealerTotal)
+        }
     } else {
         dealerTotal += card[2]
+        console.log(dealerTotal)
     }
 
     // pushing random card into dealer array 
@@ -296,9 +320,35 @@ function startGame() {
         hideDealerHand()
     }, 100)
     setTimeout(function() {
-        // check for black jack 
-        checkbj()
+
+        //if both playerTotal and dealerArr = 21, its a push. (tie)
+        if (playerTotal === 21 && dealerArr[0][2] + dealerArr[1][2] === 21) {
+            resultId.innerHTML = "You both have blackjack! It's a push!"
+            dealerDraw()
+            setTimeout(() => { reset() }, 2500)
+
+            //if player has 21 and dealer doesn't have 21, player wins.
+        } else if (playerTotal === 21 && dealerArr[0][2] + dealerArr[1][2] != 21) {
+            resultId.innerHTML = "Player wins!"
+            console.log("player wins with blackjack!")
+            dealerDraw()
+            setTimeout(() => { reset() }, 2500)
+
+            //player will win their bet x 1.5
+            bankRoll.innerHTML = parseInt(bankRoll.innerHTML) + ((parseInt(wagerArea.innerHTML)) * 1.5 + (parseInt(wagerArea.innerHTML)))
+
+            //if dealerArr = 21 and player doesn't have 21, dealer wins.
+        } else if (dealerArr[0][2] + dealerArr[1][2] === 21 && playerTotal != 21) {
+            resultId.innerHTML = "Dealer wins with blackjack!"
+            console.log("dealer wins with blackjack!")
+            dealerDraw()
+            setTimeout(() => { reset() }, 2500)
+        } else {
+
+        }
     }, 500)
+    console.log(dealerArr + "dealer start")
+    console.log(playerArr + "player start")
 }
 
 // grabbing bet button 
@@ -318,26 +368,42 @@ betBtn.addEventListener('click', () => {
 
 
 // reveal the dealer hole card and add the total
-function dealerDraw(card) {
-    console.log(dealerArr)
-    card = getRandomCard()
+function dealerDraw() {
+    console.log(dealerArr + "dealerArr inside dealerDraw")
+
 
     // [0] represents the first card in the array and [2] is the numerical value of the card 
     dealerTotal = dealerArr[0][2] + dealerArr[1][2]
-    dealerCards.innerHTML = dealerTotal
-    cardImages = cardImg(card[0], card[1])
-    dealerCardSection.append(cardImages)
+    console.log(dealerArr + "inside dealerDraw")
+    console.log(dealerTotal + "inside dealerDraw")
 
+    dealerCards.innerHTML = dealerTotal
+
+    //dealerArr[1] is the second array in dealerArr and [0] is the first element (card name). CardImg is taking in the card name and suit and will then append the card image
+    cardImages = cardImg(dealerArr[1][0], dealerArr[1][1])
+    dealerCardSection.append(cardImages)
+    console.log(dealerTotal)
 }
 // when player stands the dealer will draw up to a total of 17 and winner will be determined
 let standButton = document.getElementById('stand')
 standButton.addEventListener('click', function() {
+
     // dealer will reveal hole card and while dealerTotal is < 17 dealer will draw cards 
     dealerDraw()
+
     while (dealerTotal < 17) {
         dealerHand()
-        console.log(dealerArr)
-
+        if (dealerTotal > 21) {
+            for (var i = 0; i < dealerArr.length; i++) {
+                if (dealerArr[i].includes("ace") && dealerArr[i][2] === 11) {
+                    dealerArr[i][2] = 1
+                    dealerTotal -= 10
+                    dealerCards.innerHTML = dealerTotal
+                }
+            }
+            console.log(dealerArr)
+            console.log(dealerTotal)
+        }
     }
     // when dealer finishes drawing result will display after time has elapsed 
     setTimeout(() => { result() }, 250)
@@ -351,18 +417,22 @@ resultId.innerHTML = null
 let result = () => {
     if (dealerTotal > 21) {
         resultId.innerHTML = "Player wins!"
+        console.log(dealerTotal)
 
     } else if (playerTotal === dealerTotal) {
         resultId.innerHTML = "Push!"
         bankRoll.innerHTML = parseInt(bankRoll.innerHTML) + parseInt(wagerArea.innerHTML)
+        console.log(dealerTotal)
     } else if (playerTotal > dealerTotal) {
         resultId.innerHTML = "Player wins!"
-
+        console.log(dealerTotal)
     } else {
         resultId.innerHTML = "Dealer Wins"
+        console.log(dealerTotal)
     }
     if (resultId.innerHTML === "Player wins!") {
         bankRoll.innerHTML = parseInt(bankRoll.innerHTML) + (parseInt(wagerArea.innerHTML)) * 2
+        console.log(dealerTotal)
     }
     setTimeout(function() {
         reset()
