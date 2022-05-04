@@ -26,8 +26,8 @@ button>img {
     width: 18%;
 }
 
-#test>img,
-#test2>img {
+#playerCardSection>img,
+#dealerCardSection>img {
     width: 15%;
 }
 

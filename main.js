@@ -1,21 +1,39 @@
 import { cardDeck } from '/scratch.js'
 
+// function to create new image elements using DOM
 function cardImg(name, suit) {
     let image = document.createElement('img')
     image.src = `images/${name}-${suit}.png`
 
     return image
 }
+
+// getting dealer id and appending image
 let dealerImg = document.getElementById('dealer')
 dealerImg.append(cardImg("bj", "dealer"))
 
+// getting player id and appending image
 let playerImg = document.getElementById("player")
 playerImg.append(cardImg("bj", "player"))
 
+// function checking if player has blackjack
+function checkbj() {
 
-let test = document.getElementById("test")
-let test2 = document.getElementById("test2")
+    if (playerTotal === 21 && playerArr.length === 2) {
+        console.log('blackjack!')
+        result()
+        setTimeout(function() {
+            reset()
+        }, 1500)
+
+    }
+}
+// grabbing player and dealer section where card image will be appended
+let dealerCardSection = document.getElementById("dealerCardSection")
+let playerCardSection = document.getElementById("playerCardSection")
 let cardImages = null;
+
+let soft = false
 
 let cardBlueprint = new cardDeck
 
@@ -43,71 +61,61 @@ function getRandomCard(card) {
     //card will be chosen and returned 
     card = fullDeck[cardValue]
     card.shown = false
-
+        // card.soft = false
     console.log(card)
     return card
 }
 // Empty array that will store player cards 
 let playerArr = []
+    // player total will change based on the cards drawn
 let playerTotal = 0;
 
-
+// Empty array that will store dealer cards 
 let dealerArr = [];
+// dealer total will change based on the cards drawn
 let dealerTotal = 0;
 
-// let cashMoney = 1000;
+// bankroll will be the amount of money the player will start with 
 let bankRoll = document.getElementById("wallet")
 bankRoll.innerHTML = 1000
 
-
+// wager area will show the players current bet amount 
 let wagerArea = document.getElementById("wager-area")
-let yourBet = 0;
-let yourBetArr = []
 wagerArea.innerHTML;
+// your bet will increase as you start to bet 
+let yourBet = 0;
+let bet = false
+    // array will store your bets and can be removed if you want to change your bet 
+let yourBetArr = []
 
-let twentyFive = document.getElementById("25")
+// getting buttons 
+let twentyFiveBtn = document.getElementById("25")
 let hundredBtn = document.getElementById("100")
 let fiveHundredBtn = document.getElementById("500")
 
-twentyFive.append(cardImg("25", "chip"))
+// appending card image to buttons 
+twentyFiveBtn.append(cardImg("25", "chip"))
 hundredBtn.append(cardImg("100", "chip"))
 fiveHundredBtn.append(cardImg("500", "chip"))
 
-hundredBtn.addEventListener('click', function() {
-    if (bankRoll.innerHTML - 100 >= 0) {
-        bankRoll.innerHTML -= 100
-        wagerArea.innerHTML = yourBet += 100
-        console.log(yourBetArr)
-
-    } else {
-        alert('You dont have enough cash money')
-    }
-})
-
-let bet500 = () => {
-
-    if (bankRoll.innerHTML - 500 >= 0) {
-        wagerArea.innerHTML = yourBet += 500
-        bankRoll.innerHTML -= 500
+let betAmount = (amount) => {
+    // bankroll can not go below zero. If you have enough money you can increase your bet by amount.
+    if (bankRoll.innerHTML - amount >= 0) {
+        // bankroll will reduce by amount
+        wagerArea.innerHTML = yourBet += amount
+            // wager area will increase by amount 
+        bankRoll.innerHTML -= amount
+        bet = true
             // console.log(cashMoney)
     } else {
         alert('You dont have enough cash money')
     }
 }
-fiveHundredBtn.addEventListener('click', function() {
-    bet500()
 
-})
-
-twentyFive.addEventListener('click', function() {
-    if (bankRoll.innerHTML - 25 >= 0) {
-        wagerArea.innerHTML = yourBet += 25
-        bankRoll.innerHTML -= 25
-
-    } else {
-        alert('You dont have enough cash money')
-    }
-})
+// adding listener to button and invoking betAmount on click 
+twentyFiveBtn.addEventListener('click', () => { betAmount(25) })
+hundredBtn.addEventListener('click', () => { betAmount(100) })
+fiveHundredBtn.addEventListener('click', () => { betAmount(500) })
 
 //grabbing player cards container and displaying text to your hand 
 let playerCards = document.getElementById("player-cards")
@@ -117,37 +125,102 @@ function playerHand(card) {
 
     // card = random card 
     card = getRandomCard()
-        // playertotal will add each card value to its total 
+
+    // if (soft === true && playerTotal > 21) {
+    //     playerCards.innerHTML = 0
+    //     playerCards.innerHTML = playerTotal - 10
+    //     soft = false
+
+    // }
+    // if card index 0 === "ace" and playerTotal is less than 10 
     if (card[0] === "ace" && playerTotal <= 10) {
+        // card index 2 will equal 11
         card[2] = 11
+        soft = true
+        console.log("soft is " + soft)
+            // playertotal will add card value to its total 
+        playerTotal += card[2]
+            // playerCards section will display playerTotal 
+        playerCards.innerHTML = playerTotal
+    } else if (card[0] === "ace" && playerTotal > 10) {
+        // ace will equal 1 if player total is > 10
+        card[2] = 1
+        playerTotal += card[2]
+        playerCards.innerHTML = playerTotal
+    } else {
+        // card value will equal card value 
+        card[2] = card[2]
+        playerTotal += card[2]
+        playerCards.innerHTML = playerTotal
     }
-    playerTotal += card[2]
-        // pushing random card into player array
+    // check for black jack 
+
+    console.log(card)
+
+
+    // playerTotal += card[2]
+
+    // pushing random card into player array
     playerArr.push(card)
+    console.log(playerArr)
+    console.log(playerArr.length)
     console.log("player card")
+
+    // creating card images passing card index [0] as first param and card index[1] as second param
     cardImages = cardImg(card[0], card[1])
-        // playerCards will display player total
-    playerCards.innerHTML = playerTotal
-    test.append(cardImages)
-    console.log(test)
+
+    // appending images to playerCardSection
+    playerCardSection.append(cardImages)
+    console.log(playerCardSection)
 }
+
+// function aceLogic(playerTotal, dealerTotal, which) {
+//     let which = dealerTotal || playerTotal
+//     if (card[0] === "ace" && which <= 10) {
+//         card[2] = 11
+
+//     } else if (card[0] === "ace" && which > 10) {
+//         card[2] = 1
+
+//     } else {
+
+//         card[2] = card[2]
+//     }
+// }
 
 // grab button then append it 
 let hitButton = document.getElementById('hit')
 
 // adding event listener to get random number when button is clicked 
 hitButton.addEventListener('click', function() {
-    // when button is clicked playerHand in be invoked
+    // bet must be placed in order to hit
+    if (bet === false) {
+        alert('You need to place a bet first!')
+    }
+
     if (playerTotal < 21) {
+        // if playerTotal is less than 21, player will take another card on click 
         playerHand()
         console.log(playerArr)
+        if (playerTotal > 21) {
+            // looks through playerArr and if it includes ace[2] that equals 11, that 11 will be replaced with 1 and player total will be subtracted by 10
+            for (var i = 0; i < playerArr.length; i++) {
+                if (playerArr[i].includes("ace") && playerArr[i][2] === 11) {
+                    playerArr[i][2] = 1
+                    playerTotal -= 10
+                    playerCards.innerHTML = playerTotal
+                }
+            }
+
+        }
+        // is playerTotal > 21 you will bust and game will reset 
         if (playerTotal > 21) {
             resultId.innerHTML = "You Bust! Dealer Wins"
             setTimeout(function() {
                 reset()
             }, 2500)
-
         }
+
     } else {
         alert("You have 21! You should stand!")
     }
@@ -158,31 +231,49 @@ let dealerCards = document.getElementById("dealerCards")
 dealerCards.innerHTML = "Dealer's Hand"
 
 function dealerHand(card) {
+    // card = random card 
     card = getRandomCard()
 
+    // if card index 0 === "ace" and playerTotal is less than 10 
     if (card[0] === "ace" && dealerTotal <= 10) {
+        // card index 2 will equal 11
         card[2] = 11
+            // dealertotal will add card value to its total 
+        dealerTotal += card[2]
+
+    } else if (card[0] === "ace" && dealerTotal > 10) {
+        // ace will equal 1 if player total is > 10
+        card[2] = 1
+        dealerTotal += card[2]
+
+    } else {
+        // card value will equal card value 
+        dealerTotal += card[2]
     }
-    // card = random card 
-
-
     // total value of the cards in the dealers hand 
-    dealerTotal += card[2]
-        // pushing random card into dealer array 
+
+
+    console.log(card)
+
+    // pushing random card into dealer array 
     dealerArr.push(card)
+    console.log(dealerArr)
     console.log("dealer card")
+
+    // creating card images passing card index [0] as first param and card index[1] as second param
     cardImages = cardImg(card[0], card[1])
-    test2.append(cardImages)
-        // dealer card text will display dealerTotal 
+    dealerCardSection.append(cardImages)
+
+    // dealer card text will display dealerTotal 
     dealerCards.innerHTML = dealerTotal
 }
 
 function hideDealerHand(card) {
-    // card = random card 
     card = getRandomCard()
+
     if (card.shown === false) {
-        // total value of the cards in the dealers hand 
-        dealerTotal = dealerTotal
+        // dealer card will only display first card total. second card is hidden until player end phase.
+        dealerCards.innerHTML = dealerTotal
     } else {
         dealerTotal += card[2]
     }
@@ -193,17 +284,8 @@ function hideDealerHand(card) {
     console.log(dealerArr)
 
     // dealer card text will display dealerTotal 
-    dealerCards.innerHTML = dealerTotal
+
 }
-
-let betBtn = document.getElementById("bet")
-
-betBtn.addEventListener("click", function() {
-
-    setTimeout(function() {
-        startGame()
-    }, 300)
-})
 
 // starting game by giving two cards to player and dealer 
 function startGame() {
@@ -213,34 +295,55 @@ function startGame() {
     setTimeout(function() {
         hideDealerHand()
     }, 100)
-
+    setTimeout(function() {
+        // check for black jack 
+        checkbj()
+    }, 500)
 }
+
+// grabbing bet button 
+let betBtn = document.getElementById("bet")
+
+betBtn.addEventListener('click', () => {
+    // game won't start if bet === false 
+    if (bet === false) {
+        alert('You need to place a bet first!')
+
+        // when bet is placed, bet = true then game will start 
+    } else if (bet = true) {
+        setTimeout(() => { startGame() }, 300)
+    }
+
+})
+
 
 // reveal the dealer hole card and add the total
 function dealerDraw(card) {
+    console.log(dealerArr)
     card = getRandomCard()
 
+    // [0] represents the first card in the array and [2] is the numerical value of the card 
     dealerTotal = dealerArr[0][2] + dealerArr[1][2]
     dealerCards.innerHTML = dealerTotal
     cardImages = cardImg(card[0], card[1])
-    test2.append(cardImages)
+    dealerCardSection.append(cardImages)
 
 }
 // when player stands the dealer will draw up to a total of 17 and winner will be determined
 let standButton = document.getElementById('stand')
 standButton.addEventListener('click', function() {
+    // dealer will reveal hole card and while dealerTotal is < 17 dealer will draw cards 
     dealerDraw()
     while (dealerTotal < 17) {
         dealerHand()
+        console.log(dealerArr)
 
     }
-    setTimeout(function() {
-        result()
-
-    }, 250)
-
+    // when dealer finishes drawing result will display after time has elapsed 
+    setTimeout(() => { result() }, 250)
 })
 
+// area where result will be displayed 
 let resultId = document.getElementById('result')
 resultId.innerHTML = null
 
@@ -281,6 +384,7 @@ let reset = () => {
     playerCards.innerHTML = "Your Hand"
     resultId.innerHTML = null
     cardImages = null
-    test.textContent = ""
-    test2.textContent = ""
+    playerCardSection.textContent = ""
+    dealerCardSection.textContent = ""
+    bet = false
 }
