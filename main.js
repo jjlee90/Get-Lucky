@@ -126,12 +126,14 @@ function playerHand(card) {
     // card = random card 
     card = getRandomCard()
 
-    if (card.soft === true && playerTotal > 21) {
-        playerCards.innerHTML = playerTotal - 10
-        soft = false
-    }
+    // if (soft === true && playerTotal > 21) {
+    //     playerCards.innerHTML = 0
+    //     playerCards.innerHTML = playerTotal - 10
+    //     soft = false
+
+    // }
     // if card index 0 === "ace" and playerTotal is less than 10 
-    if (card[0] === "ace" && playerTotal < 11) {
+    if (card[0] === "ace" && playerTotal <= 10) {
         // card index 2 will equal 11
         card[2] = 11
         soft = true
@@ -140,13 +142,7 @@ function playerHand(card) {
         playerTotal += card[2]
             // playerCards section will display playerTotal 
         playerCards.innerHTML = playerTotal
-    }
-    // else if (card.soft === true && playerTotal < 21) {
-    //     if (playerCards.innerHTML += card[2] > 21) {
-    //         playerCards.innerHTML = playerCards.innerHTML - 10
-    //     }
-    // } 
-    else if (card[0] === "ace" && playerTotal > 10) {
+    } else if (card[0] === "ace" && playerTotal > 10) {
         // ace will equal 1 if player total is > 10
         card[2] = 1
         playerTotal += card[2]
@@ -197,16 +193,33 @@ let hitButton = document.getElementById('hit')
 
 // adding event listener to get random number when button is clicked 
 hitButton.addEventListener('click', function() {
+    // bet must be placed in order to hit
     if (bet === false) {
         alert('You need to place a bet first!')
-    } else if (playerTotal < 21) {
+    }
+
+    if (playerTotal < 21) {
+        // if playerTotal is less than 21, player will take another card on click 
         playerHand()
         console.log(playerArr)
-    } else if (playerTotal > 21) {
-        resultId.innerHTML = "You Bust! Dealer Wins"
-        setTimeout(function() {
-            reset()
-        }, 2500)
+        if (playerTotal > 21) {
+            // looks through playerArr and if it includes ace[2] that equals 11, that 11 will be replaced with 1 and player total will be subtracted by 10
+            for (var i = 0; i < playerArr.length; i++) {
+                if (playerArr[i].includes("ace") && playerArr[i][2] === 11) {
+                    playerArr[i][2] = 1
+                    playerTotal -= 10
+                    playerCards.innerHTML = playerTotal
+                }
+            }
+
+        }
+        // is playerTotal > 21 you will bust and game will reset 
+        if (playerTotal > 21) {
+            resultId.innerHTML = "You Bust! Dealer Wins"
+            setTimeout(function() {
+                reset()
+            }, 2500)
+        }
 
     } else {
         alert("You have 21! You should stand!")
@@ -288,10 +301,15 @@ function startGame() {
     }, 500)
 }
 
+// grabbing bet button 
 let betBtn = document.getElementById("bet")
+
 betBtn.addEventListener('click', () => {
+    // game won't start if bet === false 
     if (bet === false) {
         alert('You need to place a bet first!')
+
+        // when bet is placed, bet = true then game will start 
     } else if (bet = true) {
         setTimeout(() => { startGame() }, 300)
     }
