@@ -122,6 +122,7 @@ function playerHand(card) {
 
     // passing name and suit of card as param and appending image to player seciton 
     playerCardSection.append(cardImg(card[0], card[1]))
+    console.log({ playerTotal })
 }
 
 // getting dealerCards section and setting value
@@ -129,6 +130,7 @@ let dealerCards = document.getElementById("dealerCards")
 dealerCards.innerHTML = "Dealer's Hand"
 
 function dealerHand(card) {
+
     // card = random card
     card = getRandomCard()
 
@@ -141,6 +143,7 @@ function dealerHand(card) {
     // creating card images passing card index [0] as first param and card index[1] as second param
     cardImages = cardImg(card[0], card[1])
     dealerCardSection.append(cardImages)
+    console.log(card)
 }
 
 function hideDealerHand(card) {
@@ -181,7 +184,7 @@ function startGame() {
             playerArr[1][2] = 1
             playerTotal -= 10
             playerCards.innerHTML = playerTotal
-
+            console.log({ playerTotal })
         }
     }, 25);
     setTimeout(() => {
@@ -208,6 +211,7 @@ function startGame() {
             addReset()
         }
     }, 50);
+    console.log({ playerTotal })
 }
 
 // grab button then append it
@@ -235,9 +239,9 @@ hitButton.addEventListener('click', function() {
                     playerArr[i][2] = 1
                     playerTotal -= 10
                     playerCards.innerHTML = playerTotal
-                    console.log(playerTotal)
+                    console.log({ playerTotal })
                     console.log("ouch!")
-                    return playerTotal
+
                 }
             }
 
@@ -381,7 +385,15 @@ const reset = () => {
     dealerCardSection.textContent = ""
     bet = false
     start = false
+    let cardBlueprint = new cardDeck
 
+    // creating card of every suit
+    let spades = cardBlueprint.makeDeck("spades")
+    let clubs = cardBlueprint.makeDeck("clubs")
+    let diamond = cardBlueprint.makeDeck("diamonds")
+    let hearts = cardBlueprint.makeDeck("hearts")
+
+    fullDeck = [...spades, ...clubs, ...diamond, ...hearts]
 }
 
 // opacity will reduce by 50%, click to reset
