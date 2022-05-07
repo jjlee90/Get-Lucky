@@ -171,21 +171,19 @@ function startGame() {
     playerHand()
     setTimeout(() => {
         hideDealerHand()
-    }, 25)
+    }, 10)
 
     // check for black jack
     setTimeout(() => {
         if (playerTotal > 21) {
-            // looks through playerArr and if it includes ace[2] that equals 11, that 11 will be replaced with 1 and player total will be subtracted by 10
-            for (var i = 0; i < playerArr.length; i++) {
-                if (playerArr[i].includes("ace") && playerArr[i][2] == 11) {
-                    playerArr[1][2] = 1
-                    playerTotal -= 10
-                    playerCards.innerHTML = playerTotal
-                }
-            }
+            //if player starts with two aces, one of them will equal 1, giving them a total of 12
+
+            playerArr[1][2] = 1
+            playerTotal -= 10
+            playerCards.innerHTML = playerTotal
+
         }
-    }, 40);
+    }, 25);
     setTimeout(() => {
 
         //if both playerTotal and dealerArr = 21, its a push. (tie)

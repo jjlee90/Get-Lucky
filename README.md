@@ -32,6 +32,12 @@ Push: tie, wager is added back to bankroll
 * After you stand dealer will draw and result will display the outcome of the hand. The winner is declared by whoever has a higher total that is closest to 21 without going over 21. 
 
 
+*BUGS*
+
+Aces value is 11, but after the hand is complete the ace value is set to 1. It isn't resetting to 11 when it should. 
+
+After hand is completed screen opacity is reduced by 50% indicating the hand is complete. If a button is clicked all handlers are removed from the browser and becomes unplayable unless the screen is refreshed.
+
 
 
 Image by <a href="https://pixabay.com/users/clker-free-vector-images-3736/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=28356">Clker-Free-Vector-Images</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=28356">Pixabay</a>
