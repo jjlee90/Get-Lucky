@@ -7,7 +7,7 @@ class cardDeck {
         // method to make 13 cards
     makeDeck(suit) {
         return [
-            ["ace", this.suit = suit, 11],
+            ["ace", this.suit = suit, 1],
             ["king", this.suit = suit, 10],
             ["queen", this.suit = suit, 10],
             ["jack", this.suit = suit, 10],

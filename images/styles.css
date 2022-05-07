@@ -6,22 +6,6 @@
 
 body {
     background-color: rgb(10, 114, 10);
-    opacity: 100%;
-}
-
-#opacity {
-    opacity: 50%;
-}
-
-#main {
-    width: 85vh;
-}
-
-
-/* Player text */
-
-h2 {
-    text-align: center;
 }
 
 
