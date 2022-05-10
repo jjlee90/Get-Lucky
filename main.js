@@ -43,12 +43,16 @@ function getRandomCard(card) {
     // returns random card from fullDeck 
     return card
 }
+
+let playerAceCount = 0
+
 // Empty array that will store player cards
 let playerArr = []
     // player total will change based on the cards drawn
 let playerTotal = 0;
 
-// Empty array that will store dealer cards
+let dealerAceCount = 0
+    // Empty array that will store dealer cards
 let dealerArr = [];
 // dealer total will change based on the cards drawn
 let dealerTotal = 0;
@@ -112,8 +116,11 @@ function playerHand(card) {
 
     // card = random card
     card = getRandomCard()
+    if (card[0] == "ace") {
+        playerAceCount += 1
+    }
 
-    console.log(`player ${card} ${playerArr}`)
+
     playerTotal += card[2]
     playerCards.innerHTML = playerTotal
 
@@ -122,6 +129,7 @@ function playerHand(card) {
 
     // passing name and suit of card as param and appending image to player seciton 
     playerCardSection.append(cardImg(card[0], card[1]))
+
 }
 
 // getting dealerCards section and setting value
@@ -129,9 +137,12 @@ let dealerCards = document.getElementById("dealerCards")
 dealerCards.innerHTML = "Dealer's Hand"
 
 function dealerHand(card) {
+
     // card = random card
     card = getRandomCard()
-
+    if (card[0] == "ace") {
+        dealerAceCount += 1
+    }
     dealerTotal += card[2]
     dealerCards.innerHTML = dealerTotal
 
@@ -145,7 +156,10 @@ function dealerHand(card) {
 
 function hideDealerHand(card) {
     card = getRandomCard()
+    if (card[0] == "ace") {
+        dealerAceCount += 1
 
+    }
     // pushing random card into dealer array
     dealerArr.push(card)
 
@@ -155,6 +169,16 @@ function hideDealerHand(card) {
 function dealerDraw() {
 
     dealerTotal = dealerArr[0][2] + dealerArr[1][2]
+
+
+
+    if (dealerArr[1].includes("ace") && dealerAceCount > 0 && dealerTotal > 21) { // if dealer starts the hand with two aces, the second ace value equals one. 
+        dealerAceCount -= 1
+        dealerTotal -= 10
+        dealerCards.innerHTML = dealerTotal
+
+    }
+
 
     dealerCards.innerHTML = dealerTotal
 
@@ -176,12 +200,15 @@ function startGame() {
     // check for black jack
     setTimeout(() => {
         if (playerTotal > 21) {
-            //if player starts with two aces, one of them will equal 1, giving them a total of 12
+            //if player starts with two aces, one of them will equal 1, giving them a total of 12            for (var i = 0; i < playerArr.length; i++) {
+            if (playerArr[1].includes("ace") && playerAceCount > 0 && playerTotal > 21) {
 
-            playerArr[1][2] = 1
-            playerTotal -= 10
-            playerCards.innerHTML = playerTotal
+                playerAceCount -= 1
 
+                playerTotal -= 10
+                playerCards.innerHTML = playerTotal
+
+            }
         }
     }, 25);
     setTimeout(() => {
@@ -208,6 +235,7 @@ function startGame() {
             addReset()
         }
     }, 50);
+
 }
 
 // grab button then append it
@@ -226,27 +254,25 @@ hitButton.addEventListener('click', function() {
         alert("You have 21! You should stand!")
 
     }
-    setTimeout(() => {
-        if (playerTotal > 21) {
-            // looks through playerArr and if it includes ace[2] that equals 11, that 11 will be replaced with 1 and player total will be subtracted by 10
-
-            for (var i = 0; i < playerArr.length; i++) {
-                if (playerArr[i].includes("ace") && playerArr[i][2] == 11 && playerTotal > 21) {
-                    playerArr[i][2] = 1
-                    playerTotal -= 10
-                    playerCards.innerHTML = playerTotal
-                    console.log(playerTotal)
-                    console.log("ouch!")
-                    return playerTotal
-                }
-            }
-
-        }
-    }, 25);
     if (playerTotal < 21 && bet === true && start === true) {
         // must place a bet and start game in order to hit 
         playerHand()
     }
+    setTimeout(() => {
+        if (playerTotal > 21) {
+            // looks through playerArr and if it includes ace[2] that equals 11, that 11 will be replaced with 1 and player total will be subtracted by 10
+            for (var i = 0; i < playerArr.length; i++) {
+                if (playerArr[i].includes("ace") && playerAceCount > 0 && playerTotal > 21) {
+                    playerAceCount -= 1
+
+                    playerTotal -= 10
+                    playerCards.innerHTML = playerTotal
+
+                }
+            }
+        }
+
+    }, 25);
 
     setTimeout(() => {
         if (playerTotal > 21) {
@@ -273,37 +299,32 @@ betBtn.addEventListener('click', () => {
     }
 })
 
+// looks through dealerArr and if it includes ace[2] that equals 11, that 11 will be replaced with 1 and player total will be subtracted by 10
+function changeAce() {
+
+    for (var i = 0; i < dealerArr.length; i++) {
+        if (dealerArr[i].includes("ace") && dealerAceCount > 0 && dealerTotal > 21) {
+            dealerAceCount -= 1
+            dealerTotal -= 10
+            dealerCards.innerHTML = dealerTotal
+            return dealerTotal
+        }
+    }
+}
 // when player stands the dealer will draw up to a total of 17 and winner will be determined
 let standButton = document.getElementById('stand')
 standButton.addEventListener('click', function() {
 
     // dealer will reveal hole card and while dealerTotal is < 17 dealer will draw cards 
     dealerDraw()
-    if (dealerTotal > 21) {
-        // if dealer starts the hand with two aces, the second ace value equals one. 
-        for (var i = 0; i < dealerArr.length; i++) {
-            if (dealerArr[i].includes("ace") && dealerTotal > 21) {
-                dealerArr[1][2] = 1
-                dealerTotal -= 10
-                dealerCards.innerHTML = dealerTotal
-            }
-        }
-    }
 
     setTimeout(() => {
         while (dealerTotal < 17) {
 
-            // if dealerTotal > 21 and dealerArr includes ace and ace == 11. Then ace will equal 1 and dealer total will reduce by 10 to prevent dealer from busting.
+            //dealer draws while dealerTotal is < 17
             dealerHand()
-            if (dealerTotal > 21) {
-                for (var i = 0; i < dealerArr.length; i++) {
-                    if (dealerArr[i].includes("ace")) {
-                        dealerArr[i][2] = 1
-                        dealerTotal -= 10
-                        dealerCards.innerHTML = dealerTotal
-                    }
-                }
-            }
+            if (dealerTotal > 21) { changeAce() }
+
         }
     }, 25);
 
@@ -347,7 +368,7 @@ let result = () => {
         resultId.innerHTML = `Dealer has ${dealerTotal}. Player has ${playerTotal}. Dealer Wins.`
 
     }
-    console.log(`dealer ${dealerArr}`)
+
     setTimeout(() => { addReset() }, 50)
 
 }
@@ -381,7 +402,16 @@ const reset = () => {
     dealerCardSection.textContent = ""
     bet = false
     start = false
+    let cardBlueprint = new cardDeck
+    playerAceCount = 0
+    dealerAceCount = 0
+        // creating card of every suit
+    let spades = cardBlueprint.makeDeck("spades")
+    let clubs = cardBlueprint.makeDeck("clubs")
+    let diamond = cardBlueprint.makeDeck("diamonds")
+    let hearts = cardBlueprint.makeDeck("hearts")
 
+    fullDeck = [...spades, ...clubs, ...diamond, ...hearts]
 }
 
 // opacity will reduce by 50%, click to reset

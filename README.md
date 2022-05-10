@@ -34,8 +34,6 @@ Push: tie, wager is added back to bankroll
 
 *BUGS*
 
-Aces value is 11, but after the hand is complete the ace value is set to 1. It isn't resetting to 11 when it should. 
-
 After hand is completed screen opacity is reduced by 50% indicating the hand is complete. If a button is clicked all handlers are removed from the browser and becomes unplayable unless the screen is refreshed.
 
 
