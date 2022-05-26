@@ -1,11 +1,11 @@
 // Card deck blueprint
-class cardDeck {
+class cardSuit {
     // pass suit of the cards to be made
     constructor(suit, ) {
             this.suit = suit
         }
         // method to make 13 cards
-    makeDeck(suit) {
+    makeSuit(suit) {
         return [
             ["ace", this.suit = suit, 11],
             ["king", this.suit = suit, 10],
@@ -24,4 +24,4 @@ class cardDeck {
     }
 }
 
-export { cardDeck }
+export { cardSuit }

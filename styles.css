@@ -44,6 +44,10 @@ button>img {
     width: 15%;
 }
 
+#rotate {
+    transform: rotate(90);
+}
+
 
 /* buttons  */
 
@@ -52,6 +56,7 @@ button {
     background-color: rgb(10, 114, 10);
 }
 
+#double,
 #hit,
 #stand,
 #wager,
