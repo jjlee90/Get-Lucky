@@ -3,9 +3,9 @@ const { Schema } = mongoose
 
 const userSchema = new Schema(
   {
-    username: { type: String, required: true, unique: true },
-
-    firstName: String,
+    // username: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
+    // firstName: String,
     email: {
       type: String,
       required: [true, "Please add an email"],
@@ -17,12 +17,6 @@ const userSchema = new Schema(
     timestamps: true,
   }
 )
-
-userSchema.virtual("players", {
-  ref: "Player",
-  localField: "_id",
-  foreignField: "user",
-})
 
 const User = mongoose.model("User", userSchema)
 

@@ -16,12 +16,11 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-const userController = require("./controller/user_controller")
-app.use("/user", userController)
+app.use("/api/users", require("./routes/userRoutes"))
 
-app.get("/", (req, res) => {
-  res.json({ message: "hello" })
-})
+// app.get("/", (req, res) => {
+//   res.json({ message: "hello" })
+// })
 
 app.listen(PORT, () => {
   dbo.connectToServer(function (err) {

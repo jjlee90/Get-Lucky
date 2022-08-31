@@ -2,7 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import React from "react"
 import "./App.scss"
 import "./scss/style.scss"
-// import store from "./store"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 import Dashboard from "./components/pages/Dashboard"
 import Login from "./components/pages/Login"
 import Register from "./components/pages/Register"
@@ -21,6 +22,7 @@ function App() {
           </Routes>
         </div>
       </Router>
+      <ToastContainer />
     </>
   )
 }
