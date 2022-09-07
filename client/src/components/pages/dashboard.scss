@@ -1,0 +1,116 @@
+img {
+  width: 100%;
+  margin: 0;
+}
+
+.dealerTable {
+  display: flex;
+
+  @media screen and (min-width: 600px) {
+    width: 90%;
+  }
+}
+
+.playArea {
+  @media screen and (min-width: 600px) {
+    display: flex;
+  }
+}
+// .dealer {
+//   position: absolute;
+//   top: 1px;
+//   width: 25%;
+//   margin-top: 2em;
+//   margin-bottom: 0;
+// }
+
+// .bjTable {
+//   margin-top: 6em;
+//   height: 300px;
+// }
+
+.userContainer {
+  @media screen and (min-width: 600px) {
+    width: 30%;
+    flex-direction: column;
+  }
+  display: flex;
+  flex-direction: row;
+  margin-top: 3em;
+  background: grey;
+
+  button:hover {
+    cursor: pointer;
+  }
+
+  .playerContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 0.5em;
+    width: 35%;
+
+    p {
+      margin-top: 1em;
+    }
+
+    img {
+      width: 50%;
+    }
+  }
+
+  .chipContainer {
+    display: flex;
+    gap: 1em;
+
+    .grnChip {
+      background: rgb(10, 134, 10);
+    }
+
+    .bluChip {
+      background: blue;
+    }
+
+    .blkChip {
+      background: black;
+
+      p {
+        font-size: 0.85em;
+        margin: 0;
+        padding: 1.3em;
+      }
+    }
+
+    button {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      border: 1px solid black;
+      height: 3.2em;
+      width: 3.2em;
+
+      p {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        border: 1px solid black;
+        background: white;
+        border-radius: 50%;
+        height: 2.5em;
+        width: 2.7em;
+        font-size: 0.9em;
+        font-weight: 700;
+      }
+    }
+  }
+}
+
+.actionContainer {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}

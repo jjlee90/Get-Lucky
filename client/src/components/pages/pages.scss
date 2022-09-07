@@ -1,9 +1,19 @@
 .container {
   width: 100%;
-  max-width: 960px;
+  // max-width: 960px;
   margin: 0 auto;
   padding: 0 20px;
   text-align: center;
+  height: 80vh;
+
+  .playArea {
+    background-color: rgb(15, 107, 15);
+  }
+
+  .loginContainer,
+  .registerContainer {
+    margin-top: 60px;
+  }
 }
 
 .form,

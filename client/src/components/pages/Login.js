@@ -3,7 +3,6 @@ import { FaSignInAlt } from "react-icons/fa"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
-import "./pages.scss"
 // register and reset function
 import { login, reset } from "../../features/auth/authSlice"
 import Loading from "../loading/Loading"
@@ -58,7 +57,7 @@ export default function Login() {
     dispatch(login(userData))
   }
   return (
-    <>
+    <div className="loginContainer">
       <section>
         <h1>
           <FaSignInAlt /> Log In
@@ -99,6 +98,6 @@ export default function Login() {
           </div>
         </form>
       </section>
-    </>
+    </div>
   )
 }

@@ -29,6 +29,10 @@ export const register = createAsyncThunk(
   }
 )
 
+export const logout = createAsyncThunk("auth/logout", async () => {
+  await authService.logout()
+})
+
 // Register Login user
 export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
   try {
@@ -40,10 +44,6 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
       error.toString()
     return thunkAPI.rejectWithValue(message)
   }
-})
-
-export const logout = createAsyncThunk("auth/logout", async () => {
-  await authService.logout()
 })
 
 export const authSlice = createSlice({

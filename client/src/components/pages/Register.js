@@ -68,7 +68,7 @@ export default function Register() {
   }
 
   return (
-    <>
+    <div className="registerContainer">
       <section>
         <h1>
           <FaUser /> Register
@@ -133,6 +133,6 @@ export default function Register() {
           </div>
         </form>
       </section>
-    </>
+    </div>
   )
 }
