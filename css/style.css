@@ -1,0 +1,71 @@
+* {
+  /* border: 1px solid black; */
+  color: white;
+  /* margin: 0 0 */
+}
+
+body {
+  background-color: red;
+  opacity: 100%;
+}
+
+#opacity {
+  opacity: 50%;
+}
+
+#main {
+  width: 85vh;
+}
+
+/* Player text */
+h2 {
+  text-align: center;
+}
+
+/* Images */
+#result {
+  color: red;
+}
+
+#dealer > img {
+  width: 35%;
+}
+
+#player > img {
+  width: 50%;
+}
+
+button > img {
+  width: 18%;
+}
+
+#playerCardSection > img,
+#dealerCardSection > img {
+  width: 15%;
+}
+
+#rotate {
+  transform: rotate(90);
+}
+
+/* buttons  */
+button {
+  color: black;
+  background-color: rgb(10, 114, 10);
+}
+
+#double,
+#hit,
+#stand,
+#wager,
+#bet {
+  background-color: grey;
+}
+
+@media only screen and (max-width: 600px) {
+  #main {
+    width: 50vh;
+  }
+}
+
+/*# sourceMappingURL=style.css.map */

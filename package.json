@@ -1,0 +1,23 @@
+{
+  "name": "get-lucky",
+  "version": "1.0.0",
+  "description": "*Black Jack *",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jjlee90/Get-Lucky.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jjlee90/Get-Lucky/issues"
+  },
+  "homepage": "https://github.com/jjlee90/Get-Lucky#readme",
+  "dependencies": {
+    "sass": "^1.55.0"
+  }
+}
