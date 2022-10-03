@@ -19,6 +19,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use("/api/users", require("./routes/userRoutes"))
 app.use("/api/cards", require("./routes/cardRoutes"))
 app.use("/api/decks", require("./routes/deckRoutes"))
+app.use("/api/dealers", require("./routes/dealerRoutes"))
+app.use("/api/players", require("./routes/playerRoutes"))
 
 // app.get("/", (req, res) => {
 //   res.json({ message: "hello" })

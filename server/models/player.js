@@ -5,7 +5,8 @@ const playerSchema = new Schema({
   bankroll: Number,
   betAmount: Number,
   doubleDown: Number,
-  cardTotal: Number,
+  cardArr: Array,
+  handTotal: Number,
   aceCount: Number,
   user: {
     type: mongoose.Schema.Types.ObjectId,

@@ -1,19 +1,33 @@
-img {
-  width: 100%;
-  margin: 0;
-}
+// img {
+//   width: 100%;
+//   margin: 0;
+// }
 
 .dealerTable {
   display: flex;
 
   @media screen and (min-width: 600px) {
     width: 90%;
+
+    .pokerCard {
+      position: absolute;
+      top: 38%;
+      left: 30%;
+      width: 7%;
+    }
   }
 }
 
 .playArea {
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: top;
+  height: 100vh;
   @media screen and (min-width: 600px) {
-    display: flex;
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: top left;
+    min-height: 100vh;
   }
 }
 // .dealer {
@@ -29,6 +43,24 @@ img {
 //   height: 300px;
 // }
 
+.pokerCard {
+  position: absolute;
+
+  @for $i from 1 through 10 {
+    $top: 25%;
+
+    // top: if($reduce, $top -1, $top -1);
+    top: if(min-width - 20px, calc(#{$i + $top -2}), calc(#{$i + $top -2}));
+  }
+  //   // $width: 20px;
+  //   top: $i($top + size);
+  //   // top: $width
+  //   // top: ($i * $width) $top + 1%;
+  //   // top: calc(#{$width+top}* 1%);
+  // }
+  left: 40%;
+  width: 10%;
+}
 .userContainer {
   @media screen and (min-width: 600px) {
     width: 30%;

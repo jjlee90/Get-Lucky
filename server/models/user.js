@@ -18,6 +18,12 @@ const userSchema = new Schema(
   }
 )
 
+userSchema.virtual("players", {
+  ref: "Player",
+  localField: "_id",
+  foreignField: "user",
+})
+
 const User = mongoose.model("User", userSchema)
 
 module.exports = User

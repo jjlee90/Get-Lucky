@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 import dealer3 from "../../images/5.png"
@@ -7,25 +7,41 @@ import "./dashboard.scss"
 function Dashboard() {
   const navigate = useNavigate()
 
+  const [getCard, setGetCard] = useState("")
   const { user } = useSelector((state) => state.auth)
 
   useEffect(() => {
     if (!user) {
       navigate("/login")
     }
+    async function getCards() {
+      const response = await fetch(
+        `http://localhost:3000/api/cards/shufflecards`
+      )
+      var resData = await response.json()
+      console.log(resData)
+      setGetCard(resData)
+    }
+    getCards()
   }, [user, navigate])
 
   return (
-    <div className="container playArea">
-      {/* <h1>Welcome {user && user.name}</h1> */}
+    <div
+      className="container playArea"
+      style={{
+        backgroundImage: `url(${dealer3})`,
+      }}
+    >
       <div className="dealerTable">
-        <img src={dealer3} />
+        {/* <img src={dealer3} /> */}
+
+        <img className="pokerCard" src={getCard[2]?.image} />
       </div>
 
-      <div className="userContainer">
+      {/* <div className="userContainer">
         <div className="playerContainer">
           <img src={bjPlayer} />
-          {/* <p>{user.name}</p> */}
+          <p>{user?.name ? user.name : ""}</p>
           <p>bankroll</p>
         </div>
 
@@ -55,7 +71,7 @@ function Dashboard() {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
