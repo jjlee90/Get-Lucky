@@ -14,7 +14,7 @@
       crossorigin="anonymous"
     />
     <!-- my style sheet -->
-    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./dist/style.css" />
     <title>Get Lucky!</title>
   </head>
 
@@ -94,31 +94,32 @@
           <h2 id="player-cards" attribute="">player cards</h2>
         </div>
         <!-- player section -->
-        <div class="container d-flex justify-content-center">
-          <div class="container col-sm-6 col-md-6">
-            <div id="player" class="container row justify-content-center">
+        <div class="player-container">
+          <div class="">
+            <div id="player">
               <h2>Player</h2>
             </div>
 
-            <div class="container row">
+            <div class="btn-container">
               <button id="hit">Hit Me</button>
               <button id="double">Double Down</button>
               <button id="stand">Stand</button>
             </div>
             <!-- buttons to hit (take another card) or stand -->
           </div>
-          <div class="container col-sm-6 col-md-6">
-            <div class="container row">
+          <div class="container bank">
+            <div class="container">
               <h2>Bankroll</h2>
               <h2 id="wallet"></h2>
             </div>
 
-            <div class="container row d-flex justify-content-start">
+            <div class="bet-container">
               <button id="25"></button>
               <button id="100"></button>
               <button id="500"></button>
               <button id="bet">Bet</button>
             </div>
+
             <!-- buttons to hit (take another card) or stand -->
           </div>
         </div>

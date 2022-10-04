@@ -1,0 +1,93 @@
+@use "colors";
+
+// media query for small screen
+@mixin small() {
+  @media only screen and (max-width: 600px) {
+    @content;
+  }
+}
+
+// remove padding if true
+@mixin rm-padding($rm-pad: true) {
+  @if $rm-pad {
+    padding: 0;
+    background-color: colors.$bg-color;
+  }
+  @content;
+}
+
+// default properties for button
+@mixin button() {
+  &:hover {
+    background-color: colors.$btn-bg-hover;
+    color: colors.$primary-color;
+  }
+  display: flex;
+  justify-content: center;
+  color: colors.$btn-color;
+  background-color: colors.$btn-bg-color;
+  width: 10rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  border-radius: 5rem;
+  padding: 0.5rem;
+  @content;
+}
+
+// default display settings for buttons
+@mixin btn-container() {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  @content;
+}
+
+.player-container {
+  display: flex;
+  justify-content: center;
+
+  // buttons inside player container
+  .btn-container,
+  #player {
+    @include btn-container();
+    img {
+      width: 25%;
+    }
+  }
+
+  button {
+    @include button;
+    img {
+      width: 100%;
+    }
+  }
+  // bankroll
+  .bank {
+    width: 50%;
+    text-align: center;
+
+    .bet-container {
+      @include btn-container();
+      flex-direction: row;
+      button {
+        // remove padding from #25, #100, #500 buttons
+        @include rm-padding($rm-pad: true);
+      }
+      // add styles back to bet button
+      #bet {
+        background-color: colors.$btn-bg-color;
+        &:hover {
+          background-color: colors.$btn-bg-hover;
+          color: colors.$primary-color;
+        }
+      }
+
+      @include small() {
+        flex-direction: column;
+        button {
+          width: 80%;
+        }
+      }
+    }
+  }
+}

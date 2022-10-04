@@ -1,0 +1,29 @@
+@use "colors";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: colors.$bg-color;
+  opacity: 100%;
+}
+
+#dealer {
+  img {
+    width: 25%;
+  }
+}
+
+// card size
+#playerCardSection,
+#dealerCardSection {
+  img {
+    width: 5rem;
+  }
+}
+
+// double down card rotates
+#rotate {
+  transform: rotate(90);
+}

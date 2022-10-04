@@ -1,0 +1,8 @@
+@use "colors";
+
+#main {
+  h2,
+  h3 {
+    color: colors.$primary-color;
+  }
+}
